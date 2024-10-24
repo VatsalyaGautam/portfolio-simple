@@ -15,6 +15,17 @@ export default function Portfolio() {
   const [darkMode, setDarkMode] = useState(false);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
+  const titles = [
+    "Full Stack Developer",
+    "Frontend Developer",
+    "Backend Developer",
+    "Programmer",
+  ];
+  const [currentTitle, setCurrentTitle] = useState("");
+  const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [typingSpeed, setTypingSpeed] = useState(150);
+
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
@@ -22,6 +33,28 @@ export default function Portfolio() {
       document.documentElement.classList.remove("dark");
     }
   }, [darkMode]);
+
+  useEffect(() => {
+    const handleTyping = () => {
+      const fullTitle = titles[currentTitleIndex];
+      if (!isDeleting) {
+        setCurrentTitle((prev) => fullTitle.substring(0, prev.length + 1));
+        if (currentTitle === fullTitle) {
+          setTimeout(() => setIsDeleting(true), 2000); // Pause before deleting
+        }
+      } else {
+        setCurrentTitle((prev) => fullTitle.substring(0, prev.length - 1));
+        if (currentTitle === "") {
+          setIsDeleting(false);
+          setCurrentTitleIndex((prev) => (prev + 1) % titles.length);
+        }
+      }
+    };
+
+    const typingInterval = setInterval(handleTyping, typingSpeed);
+
+    return () => clearInterval(typingInterval);
+  }, [currentTitle, isDeleting, typingSpeed, currentTitleIndex, titles]);
 
   const toggleDarkMode = () => setDarkMode(!darkMode);
 
@@ -34,11 +67,6 @@ export default function Portfolio() {
       quote:
         "Really had a great experience while working with Vatsalya. He delivers the perfect and exact product according to the demand",
       author: "Sandeep Singh, Student at SSIPMT, Raipur",
-    },
-    {
-      quote:
-        "Vatsalya's problem-solving skills are unmatched. A true asset to any team.",
-      author: "",
     },
   ];
 
@@ -56,7 +84,7 @@ export default function Portfolio() {
     <div className="min-h-screen bg-gray-100 dark:bg-black text-gray-900 dark:text-gray-100 transition-colors duration-300">
       <header className="sticky top-0 z-10 bg-white dark:bg-gray-900 shadow-md">
         <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold">
+          <h1 className="text-2xl font-bold font-pacifico">
             Vatsalya Gautam : Pre-Final Yearite
           </h1>
           <button
@@ -76,9 +104,11 @@ export default function Portfolio() {
         <AnimatedSection>
           <section className="text-center space-y-4">
             <h2 className="text-4xl font-bold animate-fade-in-down">
-              Full Stack Developer
+              <span className="font-merriweather">I am </span>
+              <span className="font-lobster inline-block">{currentTitle}</span>
+              <span className="blinking-cursor"></span>
             </h2>
-            <p className="text-xl text-gray-600 dark:text-purple-300 animate-fade-in-up">
+            <p className="text-xl text-gray-600 dark:text-purple-300 animate-fade-in-up font-playfair">
               Crafting digital experiences with code and creativity
             </p>
           </section>

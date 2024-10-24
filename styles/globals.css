@@ -19,3 +19,66 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+/* Add this to your global CSS file */
+.font-roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+.font-lobster {
+  font-family: "Lobster", cursive;
+}
+
+.font-pacifico {
+  font-family: "Pacifico", cursive;
+}
+
+.blinking-cursor {
+  display: inline-block;
+  width: 2px; /* Thin width for the cursor */
+  height: 1.7em; /* Taller height to match or exceed text height */
+  background-color: currentColor; /* Use current text color */
+  vertical-align: middle; /* Align cursor vertically with text */
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  from,
+  to {
+    background-color: transparent;
+  }
+  50% {
+    background-color: currentColor;
+  }
+}
+
+.font-merriweather {
+  font-family: "Merriweather", serif;
+}
+.font-playfair {
+  font-family: "Playfair Display", serif;
+}
+/* Modern scrollbar styles with pitch black background and purple thumb */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+  height: 8px; /* Height of the scrollbar for horizontal scrolling */
+}
+
+::-webkit-scrollbar-track {
+  background: #000000; /* Pitch black background for the track */
+  border-radius: 10px; /* Rounded corners for the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #9333ea; /* Medium purple for the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7e22ce; /* Darker purple for the scrollbar thumb on hover */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #9333ea #000000;
+}
