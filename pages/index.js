@@ -104,7 +104,7 @@ export default function Portfolio() {
         <AnimatedSection>
           <section className="text-center space-y-4">
             <h2 className="text-4xl font-bold animate-fade-in-down">
-              <span className="font-merriweather">I am </span>
+              <span className="font-merriweather">I am a </span>
               <span className="font-lobster inline-block">{currentTitle}</span>
               <span className="blinking-cursor"></span>
             </h2>
