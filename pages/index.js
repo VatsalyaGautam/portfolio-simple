@@ -28,7 +28,7 @@ export default function Portfolio() {
   const testimonials = [
     {
       quote: "Vatsalya is an exceptional developer with a keen eye for detail.",
-      author: "Divyanshu Goswami, Student at SSIPMT, Raipur",
+      author: " ",
     },
     {
       quote:
