@@ -1,19 +1,27 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import {
-  Moon,
-  Sun,
-  Briefcase,
   GraduationCap,
+  Briefcase,
   Trophy,
   MessageSquare,
   Code,
-  ChevronLeft,
-  ChevronRight,
 } from "lucide-react";
+import Header from "../components/Header";
+import AnimatedSection from "../components/AnimatedSection";
+import Section from "../components/Section";
+import EducationItem from "../components/EducationItem";
+import ExperienceItem from "../components/ExperienceItem";
+import SkillCategory from "../components/SkillCategory";
+import ProjectCard from "../components/ProjectCard";
+import Testimonials from "../components/Testimonials";
+import Footer from "../components/Footer";
 
-export default function Portfolio() {
+export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [currentTitle, setCurrentTitle] = useState("");
+  const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [typingSpeed, setTypingSpeed] = useState(150);
 
   const titles = [
     "Full Stack Developer",
@@ -21,10 +29,6 @@ export default function Portfolio() {
     "Backend Developer",
     "Programmer",
   ];
-  const [currentTitle, setCurrentTitle] = useState("");
-  const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [typingSpeed, setTypingSpeed] = useState(150);
 
   useEffect(() => {
     if (darkMode) {
@@ -40,7 +44,7 @@ export default function Portfolio() {
       if (!isDeleting) {
         setCurrentTitle((prev) => fullTitle.substring(0, prev.length + 1));
         if (currentTitle === fullTitle) {
-          setTimeout(() => setIsDeleting(true), 2000); // Pause before deleting
+          setTimeout(() => setIsDeleting(true), 2000);
         }
       } else {
         setCurrentTitle((prev) => fullTitle.substring(0, prev.length - 1));
@@ -58,47 +62,9 @@ export default function Portfolio() {
 
   const toggleDarkMode = () => setDarkMode(!darkMode);
 
-  const testimonials = [
-    {
-      quote: "Vatsalya is an exceptional developer with a keen eye for detail.",
-      author: "Divyanshu Goswami, Student at SSIPMT, Raipur",
-    },
-    {
-      quote:
-        "Really had a great experience while working with Vatsalya. He delivers the perfect and exact product according to the demand",
-      author: "Sandeep Singh, Student at SSIPMT, Raipur",
-    },
-  ];
-
-  const nextTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setCurrentTestimonial(
-      (prev) => (prev - 1 + testimonials.length) % testimonials.length
-    );
-  };
-
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-black text-gray-900 dark:text-gray-100 transition-colors duration-300">
-      <header className="sticky top-0 z-10 bg-white dark:bg-gray-900 shadow-md">
-        <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold font-pacifico">
-            Vatsalya Gautam : Pre-Final Yearite
-          </h1>
-          <button
-            onClick={toggleDarkMode}
-            className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-purple-900 transition-colors duration-300"
-          >
-            {darkMode ? (
-              <Sun className="w-6 h-6" />
-            ) : (
-              <Moon className="w-6 h-6" />
-            )}
-          </button>
-        </nav>
-      </header>
+      <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
 
       <main className="container mx-auto px-6 py-12 space-y-24">
         <AnimatedSection>
@@ -185,7 +151,6 @@ export default function Portfolio() {
                 title="UI Frameworks"
                 skills={["Aceternity", "ShadCN", "NextUI"]}
               />
-
               <SkillCategory
                 title="Other"
                 skills={["Git/Github", "AWS (Cloud)", "RESTful APIs"]}
@@ -239,156 +204,12 @@ export default function Portfolio() {
 
         <AnimatedSection>
           <Section icon={<MessageSquare />} title="Testimonials">
-            <div className="relative overflow-hidden">
-              <div
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{
-                  transform: `translateX(-${currentTestimonial * 100}%)`,
-                }}
-              >
-                {testimonials.map((testimonial, index) => (
-                  <div key={index} className="w-full flex-shrink-0 px-4">
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-                      <p className="italic mb-4 text-gray-600 dark:text-gray-300">
-                        &quot;{testimonial.quote}&quot;
-                      </p>
-                      <p className="font-semibold text-right">
-                        - {testimonial.author}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <button
-                onClick={prevTestimonial}
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-200 dark:bg-gray-700 p-2 rounded-full opacity-75 hover:opacity-100 transition-opacity duration-300"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button
-                onClick={nextTestimonial}
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 dark:bg-gray-700 p-2 rounded-full opacity-75 hover:opacity-100 transition-opacity duration-300"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-            </div>
+            <Testimonials />
           </Section>
         </AnimatedSection>
       </main>
 
-      <footer className="bg-gray-200 dark:bg-gray-900 py-6">
-        <div className="container mx-auto px-6 text-center">
-          <p>&copy; made with ❤️ by VatsalyaGautam. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
-  );
-}
-
-function AnimatedSection({ children }) {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.1,
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
-
-  return (
-    <div
-      ref={sectionRef}
-      className={`transition-all duration-1000 transform ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
-    >
-      {children}
-    </div>
-  );
-}
-
-function Section({ icon, title, children }) {
-  return (
-    <section className="space-y-6">
-      <div className="flex items-center space-x-2">
-        {icon}
-        <h2 className="text-2xl font-bold">{title}</h2>
-      </div>
-      {children}
-    </section>
-  );
-}
-
-function EducationItem({ degree, school, year }) {
-  return (
-    <div className="group bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
-      <h3 className="font-semibold group-hover:text-purple-500 transition-colors duration-300">
-        {degree}
-      </h3>
-      <p className="text-gray-600 dark:text-gray-400">{school}</p>
-      <p className="text-sm text-gray-500 dark:text-gray-500">{year}</p>
-    </div>
-  );
-}
-
-function ExperienceItem({ title, company, period, description }) {
-  return (
-    <div className="group bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
-      <h3 className="font-semibold group-hover:text-purple-500 transition-colors duration-300">
-        {title}
-      </h3>
-      <p className="text-gray-600 dark:text-gray-400">{company}</p>
-      <p className="text-sm text-gray-500 dark:text-gray-500">{period}</p>
-      <p className="mt-2">{description}</p>
-    </div>
-  );
-}
-
-function SkillCategory({ title, skills }) {
-  return (
-    <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105">
-      <h3 className="font-semibold mb-2 text-purple-500">{title}</h3>
-      <ul className="space-y-1">
-        {skills.map((skill, index) => (
-          <li key={index} className="text-gray-600 dark:text-gray-400">
-            {skill}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function ProjectCard({ title, description, link }) {
-  return (
-    <a
-      href={link}
-      className="group bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 block"
-    >
-      <h3 className="font-semibold mb-2 group-hover:text-purple-500 transition-colors duration-300">
-        {title}
-      </h3>
-      <p className="text-gray-600 dark:text-gray-400">{description}</p>
-    </a>
   );
 }
