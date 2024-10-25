@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import LeadershipEngagement from "../components/LeadershipEngagement";
 import {
   GraduationCap,
   Briefcase,
@@ -15,6 +16,7 @@ import SkillCategory from "../components/SkillCategory";
 import ProjectCard from "../components/ProjectCard";
 import Testimonials from "../components/Testimonials";
 import Footer from "../components/Footer";
+import ContactMe from "../components/ContactMe";
 
 export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
@@ -185,27 +187,36 @@ export default function Home() {
           <Section icon={<Trophy />} title="Achievements">
             <ul className="list-disc list-inside space-y-2">
               <li className="animate-fade-in">
-                Secured Global Rank 1175, Codechef Starters 138 among 19k
-                participants
+                Secured Global Rank <strong>1175</strong>, Codechef Starters 138
+                among 19k participants
               </li>
               <li className="animate-fade-in">
-                Maximum Rating on Codechef : 1459 (2*)[vatsalya17]
+                Maximum Rating on Codechef : <strong>1459</strong>{" "}
+                (2*)[vatsalya17]
               </li>
               <li className="animate-fade-in">
-                Rated 5*(C++) and 4*(Problem Solving via DSA) on HackerRank
+                Rated <strong>5* (C++)</strong> and{" "}
+                <strong>4* (Problem Solving via DSA)</strong> on HackerRank
               </li>
               <li className="animate-fade-in">
-                Solved 500+ questions across various coding platforms including
-                LeetCode, Codechef, Code360, and HackerRank
+                Solved <strong>500+</strong> questions across various coding
+                platforms including LeetCode, Codechef, Code360, and HackerRank
               </li>
             </ul>
           </Section>
+        </AnimatedSection>
+        <AnimatedSection>
+          <LeadershipEngagement />
         </AnimatedSection>
 
         <AnimatedSection>
           <Section icon={<MessageSquare />} title="Testimonials">
             <Testimonials />
           </Section>
+        </AnimatedSection>
+
+        <AnimatedSection>
+          <ContactMe />
         </AnimatedSection>
       </main>
 

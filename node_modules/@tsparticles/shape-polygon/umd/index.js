@@ -1,0 +1,27 @@
+(function (factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
+    }
+    else if (typeof define === "function" && define.amd) {
+        define(["require", "exports", "./PolygonDrawer.js", "./TriangleDrawer.js"], factory);
+    }
+})(function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.loadGenericPolygonShape = loadGenericPolygonShape;
+    exports.loadTriangleShape = loadTriangleShape;
+    exports.loadPolygonShape = loadPolygonShape;
+    const PolygonDrawer_js_1 = require("./PolygonDrawer.js");
+    const TriangleDrawer_js_1 = require("./TriangleDrawer.js");
+    async function loadGenericPolygonShape(engine, refresh = true) {
+        await engine.addShape(new PolygonDrawer_js_1.PolygonDrawer(), refresh);
+    }
+    async function loadTriangleShape(engine, refresh = true) {
+        await engine.addShape(new TriangleDrawer_js_1.TriangleDrawer(), refresh);
+    }
+    async function loadPolygonShape(engine, refresh = true) {
+        await loadGenericPolygonShape(engine, refresh);
+        await loadTriangleShape(engine, refresh);
+    }
+});

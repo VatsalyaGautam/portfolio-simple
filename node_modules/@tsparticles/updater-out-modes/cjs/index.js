@@ -1,0 +1,9 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.loadOutModesUpdater = loadOutModesUpdater;
+const OutOfCanvasUpdater_js_1 = require("./OutOfCanvasUpdater.js");
+async function loadOutModesUpdater(engine, refresh = true) {
+    await engine.addParticleUpdater("outModes", container => {
+        return Promise.resolve(new OutOfCanvasUpdater_js_1.OutOfCanvasUpdater(container));
+    }, refresh);
+}
